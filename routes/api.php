@@ -24,4 +24,3 @@ Route::post('/create-user-account',[UserController::class,'userCreateAccount']);
 //user details (27-11-2024)
 Route::get('get-user-details',[UserController::class,'getUserDetails']);
 Route::get('fetch-weba-info/{wabaid}',[UserController::class,'fetchWeba']);
-//hiii
