@@ -24,3 +24,11 @@ Route::post('/create-user-account',[UserController::class,'userCreateAccount']);
 //user details (27-11-2024)
 Route::get('get-user-details',[UserController::class,'getUserDetails']);
 Route::get('fetch-weba-info/{wabaid}',[UserController::class,'fetchWeba']);
+
+Route::post('/template-multiple-button/{wabaid}', [UserController::class, 'sendTemplate']);
+Route::post('/create-template-carousel/{wabaid}', [UserController::class, 'carouselTemplate']);
+Route::post('/create-template-image/{wabaid}', [UserController::class, 'imageTemplate']);
+Route::post('/create-template-video/{wabaid}', [UserController::class, 'createTemplateVideo']);
+Route::post('/create-template-document/{wabaid}', [UserController::class, 'createTemplateDocument']);
+
+
