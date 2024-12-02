@@ -27,12 +27,12 @@ Route::post('/create-user-account',[UserController::class,'userCreateAccount']);
 Route::get('get-user-details',[UserController::class,'getUserDetails']);
 Route::get('fetch-weba-info/{wabaid}',[UserController::class,'fetchWeba']);
 
-//Nikita Apis (29-11-2024)
-Route::post('create-template-location/{wabaid}',[TemplateController::class,'createTemplateLocation']);
-Route::post('create-template-text/{wabaid}',[TemplateController::class,'createTemplateText']);
-Route::post('create-template-copy-code/{wabaid}',[TemplateController::class,'createTemplateCopyCode']);
-Route::post('create-template-catalog/{wabaid}',[TemplateController::class,'createTemplateCatalog']);
-Route::post('create-template-mpm/{wabaid}',[TemplateController::class,'createTemplateMpm']);
+// //Nikita Apis (29-11-2024)
+// Route::post('create-template-location/{wabaid}',[TemplateController::class,'createTemplateLocation']);
+// Route::post('create-template-text/{wabaid}',[TemplateController::class,'createTemplateText']);
+// Route::post('create-template-copy-code/{wabaid}',[TemplateController::class,'createTemplateCopyCode']);
+// Route::post('create-template-catalog/{wabaid}',[TemplateController::class,'createTemplateCatalog']);
+// Route::post('create-template-mpm/{wabaid}',[TemplateController::class,'createTemplateMpm']);
 
 //create template
 Route::post('/template-multiple-button/{wabaid}', [UserController::class, 'sendTemplate']);
