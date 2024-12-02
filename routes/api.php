@@ -33,6 +33,8 @@ Route::post('create-template-text/{wabaid}',[TemplateController::class,'createTe
 Route::post('create-template-copy-code/{wabaid}',[TemplateController::class,'createTemplateCopyCode']);
 Route::post('create-template-catalog/{wabaid}',[TemplateController::class,'createTemplateCatalog']);
 Route::post('create-template-mpm/{wabaid}',[TemplateController::class,'createTemplateMpm']);
+
+//create template
 Route::post('/template-multiple-button/{wabaid}', [UserController::class, 'sendTemplate']);
 Route::post('/create-template-carousel/{wabaid}', [UserController::class, 'carouselTemplate']);
 Route::post('/create-template-image/{wabaid}', [UserController::class, 'imageTemplate']);
@@ -45,3 +47,16 @@ Route::post('edit-template-text/{msgtemplateid}',[TemplateController::class,'edi
 Route::post('edit-template-copy-code/{msgtemplateid}',[TemplateController::class,'editTemplateCopyCode']);
 Route::post('edit-template-catalog/{msgtemplateid}',[TemplateController::class,'editTemplateCatalog']);
 Route::post('edit-template-mpm/{msgtemplateid}',[TemplateController::class,'editTemplateMpm']);
+// (29-11-2024)
+Route::post('create-template-location/{wabaid}',[TemplateController::class,'createTemplateLocation']);
+Route::post('create-template-text/{wabaid}',[TemplateController::class,'createTemplateText']);
+Route::post('create-template-copy-code/{wabaid}',[TemplateController::class,'createTemplateCopyCode']);
+Route::post('create-template-catalog/{wabaid}',[TemplateController::class,'createTemplateCatalog']);
+Route::post('create-template-mpm/{wabaid}',[TemplateController::class,'createTemplateMpm']);
+
+// (02-12-2024)
+Route::post('/edit-template-multiple-button/{msgtemplateid}',[TemplateController::class,'editTemplateMultipleButton']);
+Route::post('/edit-template-carousel/{msgtemplateid}',[TemplateController::class,'editTempCarousel']);
+Route::post('/edit-template-image/{msgtemplateid}',[TemplateController::class,'editTemplateImage']);
+Route::post('/edit-template-video/{msgtemplateid}',[TemplateController::class,'editTemplateVideo']);
+Route::post('/edit-template-document/{msgtemplateid}',[TemplateController::class,'editTemplateDocument']);
