@@ -42,7 +42,9 @@ Route::post('create-template-copy-code/{wabaid}',[TemplateController::class,'cre
 Route::post('create-template-catalog/{wabaid}',[TemplateController::class,'createTemplateCatalog']);
 Route::post('create-template-mpm/{wabaid}',[TemplateController::class,'createTemplateMpm']);
 
-
-
-
-
+// (02-12-2024)
+Route::post('/edit-template-multiple-button/{msgtemplateid}',[TemplateController::class,'editTemplateMultipleButton']);
+Route::post('/edit-template-carousel/{msgtemplateid}',[TemplateController::class,'editTempCarousel']);
+Route::post('/edit-template-image/{msgtemplateid}',[TemplateController::class,'editTemplateImage']);
+Route::post('/edit-template-video/{msgtemplateid}',[TemplateController::class,'editTemplateVideo']);
+Route::post('/edit-template-document/{msgtemplateid}',[TemplateController::class,'editTemplateDocument']);
