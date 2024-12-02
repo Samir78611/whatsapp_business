@@ -36,25 +36,34 @@ class TemplateController extends Controller
 
         // Execute the cURL request
         $response = curl_exec($curl);
-
-        // Check for cURL errors
+        // dd($response);
         if ($response === false) {
             return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
         }
 
-        // Get HTTP status code
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        // Close the cURL session
         curl_close($curl);
 
-        // Check if response is not 200 OK
         if ($httpStatus != 200) {
-            return response()->json(['error' => 'API error: ' . $response], $httpStatus);
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
         }
 
-        // Return the API response as JSON
-        return response()->json(json_decode($response), 200);
+        return response()->json(json_decode($response, true), 200);
     }
 
     public function createTemplateText(Request $request, $wabaid)
@@ -87,25 +96,34 @@ class TemplateController extends Controller
 
         // Execute the cURL request
         $response = curl_exec($curl);
-
-        // Check for cURL errors
+        // dd($response);
         if ($response === false) {
             return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
         }
 
-        // Get HTTP status code
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        // Close the cURL session
         curl_close($curl);
 
-        // Check if response is not 200 OK
         if ($httpStatus != 200) {
-            return response()->json(['error' => 'API error: ' . $response], $httpStatus);
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
         }
 
-        // Return the API response as JSON
-        return response()->json(json_decode($response), 200);
+        return response()->json(json_decode($response, true), 200);
     }
 
     public function createTemplateCopyCode(Request $request, $wabaid)
@@ -138,25 +156,34 @@ class TemplateController extends Controller
 
         // Execute the cURL request
         $response = curl_exec($curl);
-
-        // Check for cURL errors
+        // dd($response);
         if ($response === false) {
             return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
         }
 
-        // Get HTTP status code
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        // Close the cURL session
         curl_close($curl);
 
-        // Check if response is not 200 OK
         if ($httpStatus != 200) {
-            return response()->json(['error' => 'API error: ' . $response], $httpStatus);
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
         }
 
-        // Return the API response as JSON
-        return response()->json(json_decode($response), 200);
+        return response()->json(json_decode($response, true), 200);
     }
 
     public function createTemplateCatalog(Request $request, $wabaid)
@@ -189,28 +216,37 @@ class TemplateController extends Controller
 
         // Execute the cURL request
         $response = curl_exec($curl);
-
-        // Check for cURL errors
+        // dd($response);
         if ($response === false) {
             return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
         }
 
-        // Get HTTP status code
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        // Close the cURL session
         curl_close($curl);
 
-        // Check if response is not 200 OK
         if ($httpStatus != 200) {
-            return response()->json(['error' => 'API error: ' . $response], $httpStatus);
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
         }
 
-        // Return the API response as JSON
-        return response()->json(json_decode($response), 200);
+        return response()->json(json_decode($response, true), 200);
     }
 
-    
+
     public function createTemplateMpm(Request $request, $wabaid)
     {
         $apiKey = $request->input('apikey');
@@ -241,25 +277,325 @@ class TemplateController extends Controller
 
         // Execute the cURL request
         $response = curl_exec($curl);
-
-        // Check for cURL errors
+        // dd($response);
         if ($response === false) {
             return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
         }
 
-        // Get HTTP status code
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        // Close the cURL session
         curl_close($curl);
 
-        // Check if response is not 200 OK
         if ($httpStatus != 200) {
-            return response()->json(['error' => 'API error: ' . $response], $httpStatus);
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
         }
 
-        // Return the API response as JSON
-        return response()->json(json_decode($response), 200);
+        return response()->json(json_decode($response, true), 200);
     }
 
+    //Edit Templates
+
+    public function editTemplateLocation(Request $request, $msgtemplateid)
+    {
+        $apiKey = $request->input('apikey');
+        $payload = $request->input('payload');
+        $url = 'https://partnersv1.pinbot.ai/v3/' . $msgtemplateid;
+
+
+        // Initialize cURL session
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey,
+                'Content-Type: application/json',
+            ],
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+        ]);
+
+        $response = curl_exec($curl);
+        // dd($response);
+        if ($response === false) {
+            return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
+        }
+
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($httpStatus != 200) {
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
+        }
+
+        return response()->json(json_decode($response, true), 200);
+    }
+
+    public function editTemplateText(Request $request, $msgtemplateid)
+    {
+        $apiKey = $request->input('apikey');
+        $payload = $request->input('payload');
+        $url = 'https://partnersv1.pinbot.ai/v3/' . $msgtemplateid;
+
+
+        // Initialize cURL session
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey,
+                'Content-Type: application/json',
+            ],
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+        ]);
+
+        $response = curl_exec($curl);
+        // dd($response);
+        if ($response === false) {
+            return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
+        }
+
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($httpStatus != 200) {
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
+        }
+
+        return response()->json(json_decode($response, true), 200);
+    }
+
+    public function editTemplateCopyCode(Request $request, $msgtemplateid)
+    {
+        $apiKey = $request->input('apikey');
+        $payload = $request->input('payload');
+        $url = 'https://partnersv1.pinbot.ai/v3/' . $msgtemplateid;
+
+
+        // Initialize cURL session
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey,
+                'Content-Type: application/json',
+            ],
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+        ]);
+
+        $response = curl_exec($curl);
+        // dd($response);
+        if ($response === false) {
+            return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
+        }
+
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($httpStatus != 200) {
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
+        }
+
+        return response()->json(json_decode($response, true), 200);
+    }
+
+    public function editTemplateCatalog(Request $request, $msgtemplateid)
+    {
+        $apiKey = $request->input('apikey');
+        $payload = $request->input('payload');
+        $url = 'https://partnersv1.pinbot.ai/v3/' . $msgtemplateid;
+
+
+        // Initialize cURL session
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey,
+                'Content-Type: application/json',
+            ],
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+        ]);
+
+        $response = curl_exec($curl);
+        // dd($response);
+        if ($response === false) {
+            return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
+        }
+
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($httpStatus != 200) {
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
+        }
+
+        return response()->json(json_decode($response, true), 200);
+    }
+
+    public function editTemplateMpm(Request $request, $msgtemplateid)
+    {
+        $apiKey = $request->input('apikey');
+        $payload = $request->input('payload');
+        $url = 'https://partnersv1.pinbot.ai/v3/' . $msgtemplateid;
+
+
+        // Initialize cURL session
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey,
+                'Content-Type: application/json',
+            ],
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+        ]);
+
+        $response = curl_exec($curl);
+        // dd($response);
+        if ($response === false) {
+            return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
+        }
+
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($httpStatus != 200) {
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
+        }
+
+        return response()->json(json_decode($response, true), 200);
+    }
 }
