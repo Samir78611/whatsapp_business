@@ -27,36 +27,28 @@ Route::post('/create-user-account',[UserController::class,'userCreateAccount']);
 Route::get('get-user-details',[UserController::class,'getUserDetails']);
 Route::get('fetch-weba-info/{wabaid}',[UserController::class,'fetchWeba']);
 
-// //Nikita Apis (29-11-2024)
-// Route::post('create-template-location/{wabaid}',[TemplateController::class,'createTemplateLocation']);
-// Route::post('create-template-text/{wabaid}',[TemplateController::class,'createTemplateText']);
-// Route::post('create-template-copy-code/{wabaid}',[TemplateController::class,'createTemplateCopyCode']);
-// Route::post('create-template-catalog/{wabaid}',[TemplateController::class,'createTemplateCatalog']);
-// Route::post('create-template-mpm/{wabaid}',[TemplateController::class,'createTemplateMpm']);
 
-//create template
+//create template // (29-11-2024)
 Route::post('/template-multiple-button/{wabaid}', [UserController::class, 'sendTemplate']);
 Route::post('/create-template-carousel/{wabaid}', [UserController::class, 'carouselTemplate']);
 Route::post('/create-template-image/{wabaid}', [UserController::class, 'imageTemplate']);
 Route::post('/create-template-video/{wabaid}', [UserController::class, 'createTemplateVideo']);
 Route::post('/create-template-document/{wabaid}', [UserController::class, 'createTemplateDocument']);
-
-//Edit Templates
-Route::post('edit-template-location/{msgtemplateid}',[TemplateController::class,'editTemplateLocation']);
-Route::post('edit-template-text/{msgtemplateid}',[TemplateController::class,'editTemplateText']);
-Route::post('edit-template-copy-code/{msgtemplateid}',[TemplateController::class,'editTemplateCopyCode']);
-Route::post('edit-template-catalog/{msgtemplateid}',[TemplateController::class,'editTemplateCatalog']);
-Route::post('edit-template-mpm/{msgtemplateid}',[TemplateController::class,'editTemplateMpm']);
-// (29-11-2024)
 Route::post('create-template-location/{wabaid}',[TemplateController::class,'createTemplateLocation']);
 Route::post('create-template-text/{wabaid}',[TemplateController::class,'createTemplateText']);
 Route::post('create-template-copy-code/{wabaid}',[TemplateController::class,'createTemplateCopyCode']);
 Route::post('create-template-catalog/{wabaid}',[TemplateController::class,'createTemplateCatalog']);
 Route::post('create-template-mpm/{wabaid}',[TemplateController::class,'createTemplateMpm']);
 
+//Edit Templates
 // (02-12-2024)
 Route::post('/edit-template-multiple-button/{msgtemplateid}',[TemplateController::class,'editTemplateMultipleButton']);
 Route::post('/edit-template-carousel/{msgtemplateid}',[TemplateController::class,'editTempCarousel']);
 Route::post('/edit-template-image/{msgtemplateid}',[TemplateController::class,'editTemplateImage']);
 Route::post('/edit-template-video/{msgtemplateid}',[TemplateController::class,'editTemplateVideo']);
 Route::post('/edit-template-document/{msgtemplateid}',[TemplateController::class,'editTemplateDocument']);
+Route::post('edit-template-location/{msgtemplateid}',[TemplateController::class,'editTemplateLocation']);
+Route::post('edit-template-text/{msgtemplateid}',[TemplateController::class,'editTemplateText']);
+Route::post('edit-template-copy-code/{msgtemplateid}',[TemplateController::class,'editTemplateCopyCode']);
+Route::post('edit-template-catalog/{msgtemplateid}',[TemplateController::class,'editTemplateCatalog']);
+Route::post('edit-template-mpm/{msgtemplateid}',[TemplateController::class,'editTemplateMpm']);
