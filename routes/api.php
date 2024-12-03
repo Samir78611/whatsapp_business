@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -52,3 +54,7 @@ Route::post('edit-template-text/{msgtemplateid}',[TemplateController::class,'edi
 Route::post('edit-template-copy-code/{msgtemplateid}',[TemplateController::class,'editTemplateCopyCode']);
 Route::post('edit-template-catalog/{msgtemplateid}',[TemplateController::class,'editTemplateCatalog']);
 Route::post('edit-template-mpm/{msgtemplateid}',[TemplateController::class,'editTemplateMpm']);
+
+//media
+Route::get('media/{mediaId}', [MediaController::class, 'getMediaUrl']);
+Route::get('download-media', [MediaController::class, 'downloadMedia']);
