@@ -1,0 +1,32 @@
+{
+    "apikey": "2c475626-7591-11ef-b06a-02c8a5e042bd",
+    "name": "multi-click-template",
+    "category": "MARKETING-BILL",
+    "components": [
+        {
+            "type": "header",
+            "format": "TEXT",
+            "text": "welcome to  Samir Home"
+        },
+        {
+            "type": "BODY",
+            "text": "We will have lunch 2'o clock"
+        },
+        {
+            "type": "BUTTONS",
+            "buttons": [
+                {
+                    "type": "QUICK_REPLY",
+                    "text": "Are you coming ?"
+                },
+                {
+                    "type": "QUICK_REPLY",
+                    "text": "Are you not coming ?"
+                }
+                
+            ]
+        }
+    ],
+    "language": "en_US",
+    "allow_category_change": true
+}

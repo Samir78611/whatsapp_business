@@ -52,3 +52,9 @@ Route::post('edit-template-text/{msgtemplateid}',[TemplateController::class,'edi
 Route::post('edit-template-copy-code/{msgtemplateid}',[TemplateController::class,'editTemplateCopyCode']);
 Route::post('edit-template-catalog/{msgtemplateid}',[TemplateController::class,'editTemplateCatalog']);
 Route::post('edit-template-mpm/{msgtemplateid}',[TemplateController::class,'editTemplateMpm']);
+
+
+//media
+Route::post('/upload-media/{phoneNumberId}', [TemplateController::class, 'uploadMediaFile']);
+Route::post('/download-media/{mediaId}/{phoneNumberId}', [TemplateController::class, 'downloadMedia']);
+Route::delete('/deleteMedia/{mediaId}/{phoneNumberId}', [TemplateController::class, 'deleteMedia']);
