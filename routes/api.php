@@ -58,3 +58,8 @@ Route::post('edit-template-mpm/{msgtemplateid}',[TemplateController::class,'edit
 //media
 Route::get('media/{mediaId}', [MediaController::class, 'getMediaUrl']);
 Route::get('download-media', [MediaController::class, 'downloadMedia']);
+
+//media
+Route::post('/upload-media/{phoneNumberId}', [TemplateController::class, 'uploadMediaFile']);
+Route::post('/download-media/{mediaId}/{phoneNumberId}', [TemplateController::class, 'downloadMedia']);
+Route::delete('/deleteMedia/{mediaId}/{phoneNumberId}', [TemplateController::class, 'deleteMedia']);
