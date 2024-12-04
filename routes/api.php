@@ -55,12 +55,12 @@ Route::post('edit-template-copy-code/{msgtemplateid}',[TemplateController::class
 Route::post('edit-template-catalog/{msgtemplateid}',[TemplateController::class,'editTemplateCatalog']);
 Route::post('edit-template-mpm/{msgtemplateid}',[TemplateController::class,'editTemplateMpm']);
 
-
-
-
 //media
 Route::post('/upload-media/{phoneNumberId}', [TemplateController::class, 'uploadMediaFile']);
 Route::post('/download-media/{mediaId}/{phoneNumberId}', [TemplateController::class, 'downloadMedia']);
 Route::delete('/deleteMedia/{mediaId}/{phoneNumberId}', [TemplateController::class, 'deleteMedia']);
 Route::get('media/{mediaId}', [MediaController::class, 'getMediaUrl']);
 Route::get('download-media', [MediaController::class, 'downloadMedia']);
+
+//Retrive Header Handle
+Route::post('create-session', [MediaController::class, 'createSession']);
