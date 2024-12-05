@@ -55,9 +55,6 @@ Route::post('edit-template-copy-code/{msgtemplateid}',[TemplateController::class
 Route::post('edit-template-catalog/{msgtemplateid}',[TemplateController::class,'editTemplateCatalog']);
 Route::post('edit-template-mpm/{msgtemplateid}',[TemplateController::class,'editTemplateMpm']);
 
-
-
-
 //media
 Route::post('/upload-media/{phoneNumberId}', [TemplateController::class, 'uploadMediaFile']);
 Route::post('/download-media/{mediaId}/{phoneNumberId}', [TemplateController::class, 'downloadMedia']);
@@ -65,9 +62,14 @@ Route::delete('/deleteMedia/{mediaId}/{phoneNumberId}', [TemplateController::cla
 Route::get('media/{mediaId}', [MediaController::class, 'getMediaUrl']);
 Route::get('download-media', [MediaController::class, 'downloadMedia']);
 
+<<<<<<< HEAD
 
 //initiate upload
 Route::post('/upload-file', [UserController::class, 'uploadFile']);
 
 
 
+=======
+//Retrive Header Handle
+Route::post('create-session', [MediaController::class, 'createSession']);
+>>>>>>> 0768721c58d0d227be70c44f57fab3b25ef5e699

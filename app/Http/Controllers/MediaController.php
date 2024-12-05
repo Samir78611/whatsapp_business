@@ -122,4 +122,68 @@ class MediaController extends Controller
             ->header('Content-Type', 'application/octet-stream')
             ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
+
+    //Retrive Header Handle
+
+    public function createSession(Request $request)
+    {
+        $apiKey = $request->input('apikey');
+        // Build the API URL
+        $url = "https://partnersv1.pinbot.ai/v3/app/uploads?file_length=164313&file_type=video/mp4";
+
+        // Initialize cURL session
+        $curl = curl_init();
+
+        // Set the cURL options
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); // Disable SSL host verification
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // Disable SSL peer verification
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey
+            ],
+        ]);
+
+        // Execute the cURL request
+        $response = curl_exec($curl);
+
+        // Handle cURL errors
+        if ($response === false) {
+            return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
+        }
+
+        // Get HTTP response status
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        // Handle non-200 HTTP responses
+        if ($httpStatus != 200) {
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
+        }
+
+        // Return the successful response as JSON
+        return response()->json(json_decode($response, true), 200);
+    }
 }
