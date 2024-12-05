@@ -420,6 +420,7 @@ class UserController extends Controller
                 'message' => 'Missing required apikey in the request',
             ], 400);
         }
+        
 
         // Retrieve payload from the request body and exclude the apikey
         $payload = $request->except('apikey');
@@ -427,15 +428,7 @@ class UserController extends Controller
         // Set headers with the apikey
         $headers = [
 
-       'Cache-Control: no-cache',
-        'Postman-Token: <calculated when request is sent>',
-        'Content-Type: application/json',
-        'Content-Length: <calculated when request is sent>',
-        'Host: <calculated when request is sent>',
-        'User-Agent: PostmanRuntime/7.32.1',
-        'Accept: */*',
-        'Accept-Encoding: gzip, deflate, br',
-        'Connection: keep-alive',
+       'Content-Type: application/json',
         "apikey: {$apikey}",
         ];
         //dd($headers);
@@ -569,6 +562,53 @@ class UserController extends Controller
             ], $httpCode);
         }
       }
+
+
+
+    //  initiate upload
+
+    public function uploadFile(Request $request)
+    {
+       
+
+      // Get the uploaded file
+    $file = $request->file('file');
+
+    // Open the file as binary
+    $fileContent = fopen($file->getRealPath(), 'r');
+
+    // Get the API key from the request input
+    $apikey = $request->input('apikey');
+    $session=$request->input('session');
+
+    // API URL
+    $url = "https://partnersv1.pinbot.ai/v3/upload:" .$session;
+    //dd($url);
+
+    // Send the API request with binary file data and dynamic API key
+    $response = Http::withHeaders([
+        'apikey' => $apikey, // Dynamic API key from the request
+    ])->withBody(stream_get_contents($fileContent), $file->getMimeType())
+        ->post($url);
+
+    // Close the file resource
+    fclose($fileContent);
+
+    // Check response status and return
+    if ($response->successful()) {
+        return response()->json([
+            'message' => 'File uploaded successfully!',
+            'response' => $response->json(),
+        ]);
+    } else {
+        return response()->json([
+            'message' => 'Failed to upload file.',
+            'response' => $response->json(),
+        ], $response->status());
+    }
+}
+    
+    
     }
 
 

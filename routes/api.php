@@ -64,3 +64,10 @@ Route::post('/download-media/{mediaId}/{phoneNumberId}', [TemplateController::cl
 Route::delete('/deleteMedia/{mediaId}/{phoneNumberId}', [TemplateController::class, 'deleteMedia']);
 Route::get('media/{mediaId}', [MediaController::class, 'getMediaUrl']);
 Route::get('download-media', [MediaController::class, 'downloadMedia']);
+
+
+//initiate upload
+Route::post('/upload-file', [UserController::class, 'uploadFile']);
+
+
+
