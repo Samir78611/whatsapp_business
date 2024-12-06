@@ -65,8 +65,5 @@ Route::get('download-media', [MediaController::class, 'downloadMedia']);
 
 //initiate upload
 Route::post('/upload-file', [UserController::class, 'uploadFile']);
-
-
-
 //Retrive Header Handle
 Route::post('create-session', [MediaController::class, 'createSession']);
