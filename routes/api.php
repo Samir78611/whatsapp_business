@@ -66,3 +66,9 @@ Route::get('download-media', [MediaController::class, 'downloadMedia']);
 Route::post('/upload-file', [UserController::class, 'uploadFile']);
 //Retrive Header Handle
 Route::post('create-session', [MediaController::class, 'createSession']);
+
+//Send Message template
+Route::post('send-location-message', [MediaController::class, 'sendLocationMsg']);
+Route::post('send-list-message', [MediaController::class, 'sendListMsg']);
+Route::post('send-reply-button', [MediaController::class, 'sendReplyButton']);
+Route::post('send-message-template-text', [MediaController::class, 'sendMessageTemplateText']);
