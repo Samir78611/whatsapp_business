@@ -67,3 +67,10 @@ Route::get('download-media', [MediaController::class, 'downloadMedia']);
 Route::post('/upload-file', [UserController::class, 'uploadFile']);
 //Retrive Header Handle
 Route::post('create-session', [MediaController::class, 'createSession']);
+
+//send message
+Route::post('/send-message/{phone_number_id}', [MediaController::class, 'sendMessage']);
+Route::post('/send-image-message/{phone_number_id}', [MediaController::class, 'sendImageMessage']);
+Route::post('/send-contact-message', [MediaController::class, 'sendContactMessage']);
+
+
