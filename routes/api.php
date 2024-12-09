@@ -62,7 +62,6 @@ Route::delete('/deleteMedia/{mediaId}/{phoneNumberId}', [TemplateController::cla
 Route::get('media/{mediaId}', [MediaController::class, 'getMediaUrl']);
 Route::get('download-media', [MediaController::class, 'downloadMedia']);
 
-
 //initiate upload
 Route::post('/upload-file', [UserController::class, 'uploadFile']);
 //Retrive Header Handle
