@@ -68,6 +68,9 @@ Route::post('/upload-file', [UserController::class, 'uploadFile']);
 Route::post('create-session', [MediaController::class, 'createSession']);
 
 //Send Message template
+Route::post('send-carousel-message', [MediaController::class, 'sendCarouselMsg']);
+Route::post('send-catalog-message', [MediaController::class, 'sendCatalogMsg']);
+
 Route::post('send-location-message', [MediaController::class, 'sendLocationMsg']);
 Route::post('send-list-message', [MediaController::class, 'sendListMsg']);
 Route::post('send-reply-button', [MediaController::class, 'sendReplyButton']);
