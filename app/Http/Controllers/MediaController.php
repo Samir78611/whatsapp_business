@@ -886,7 +886,6 @@ class MediaController extends Controller
     {
         // Retrieve input data from the request
         $phone_number_id = $request->input('phone_number_id');
-        $recipientnumber = $request->input('to');
         $apiKey = $request->input('apikey');
         $payload = $request->input('payload'); // Dynamically retrieve the payload
 
@@ -936,7 +935,7 @@ class MediaController extends Controller
 
         // Decode the response and return it
         return response()->json([
-            'status' => 'success',
+            //'status' => 'success',
             'response' => json_decode($response, true),
         ]);
     }
