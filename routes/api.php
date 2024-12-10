@@ -72,3 +72,9 @@ Route::post('send-location-message', [MediaController::class, 'sendLocationMsg']
 Route::post('send-list-message', [MediaController::class, 'sendListMsg']);
 Route::post('send-reply-button', [MediaController::class, 'sendReplyButton']);
 Route::post('send-message-template-text', [MediaController::class, 'sendMessageTemplateText']);
+//send message
+Route::post('/send-message/{phone_number_id}', [MediaController::class, 'sendMessage']);
+Route::post('/send-image-message/{phone_number_id}', [MediaController::class, 'sendImageMessage']);
+Route::post('/send-contact-message', [MediaController::class, 'sendContactMessage']);
+
+
