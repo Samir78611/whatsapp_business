@@ -70,6 +70,8 @@ Route::post('create-session', [MediaController::class, 'createSession']);
 //Send Message template
 Route::post('send-carousel-message', [MediaController::class, 'sendCarouselMsg']);
 Route::post('send-catalog-message', [MediaController::class, 'sendCatalogMsg']);
+Route::post('send-mpm-message', [MediaController::class, 'sendMpmMessage']);
+Route::post('send-copy-code', [MediaController::class, 'sendCopyCode']);
 
 Route::post('send-location-message', [MediaController::class, 'sendLocationMsg']);
 Route::post('send-list-message', [MediaController::class, 'sendListMsg']);
