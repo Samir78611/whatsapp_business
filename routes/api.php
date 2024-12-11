@@ -84,3 +84,6 @@ Route::post('/send-contact-message', [MediaController::class, 'sendContactMessag
 //11-12-2024
 Route::post('mark-messages-read', [MediaController::class, 'markMessages']);
 Route::post('send-messages-media', [MediaController::class, 'sendMedia']);
+Route::post('/send-interactive-message',[MediaController::class,'sendMessageTemplateInteractive']);
+
+
