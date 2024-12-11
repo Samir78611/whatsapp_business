@@ -940,5 +940,68 @@ class MediaController extends Controller
         ]);
     }
 
+
+
+
+
+    // Send Message Template Interactive
+    public function sendMessageTemplateInteractive(Request $request)
+    {
+        // Retrieve required data from the request
+        $phone_number_id = $request->input('phone_number_id');
+        //$recipientnumber = $request->input('recipientnumber');
+        $apiKey = $request->input('apikey');
+        $body = $request->input('body'); // Dynamically retrieve the POST body
+        //dd($body);
+
+        // Define the API URL dynamically
+        $url = 'https://partnersv1.pinbot.ai/v3/' . $phone_number_id . '/messages';
+
+        // Ensure the 'to' field is present in the body; if not, add it dynamically
+        if (!isset($body['to'])) {
+            $body['to'] = $recipientnumber;
+        }
+
+        // Initialize cURL
+        $curl = curl_init();
+
+        // Set the cURL options
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'apikey: ' . $apiKey,
+            ],
+            CURLOPT_POSTFIELDS => json_encode($body), // Send the body dynamically
+        ]);
+
+        // Execute the cURL request
+        $response = curl_exec($curl);
+
+        // Handle cURL errors
+        if (curl_errno($curl)) {
+            return response()->json([
+                'status' => 'error',
+                'error' => curl_error($curl),
+            ], 500);
+        }
+
+        // Close cURL
+        curl_close($curl);
+
+        // Decode the API response and return it
+        return response()->json([
+            'status' => 'success',
+            'response' => json_decode($response, true),
+        ]);
+    }
+
 }
 
