@@ -890,9 +890,9 @@ class MediaController extends Controller
         $url = 'https://partnersv1.pinbot.ai/v3/' . $phone_number_id . '/messages';
 
         // Ensure the 'to' field is present in the payload; if not, add it dynamically
-        if (!isset($payload['to'])) {
-            $payload['to'] = $recipientnumber;
-        }
+        // if (!isset($payload['to'])) {
+        //     $payload['to'] = $recipientnumber;
+        // }
 
         // Initialize cURL
         $curl = curl_init();
@@ -951,9 +951,9 @@ class MediaController extends Controller
         $url = 'https://partnersv1.pinbot.ai/v3/' . $phone_number_id . '/messages';
 
         // Ensure the 'to' field is present in the body; if not, add it dynamically
-        if (!isset($body['to'])) {
-            $body['to'] = $recipientnumber;
-        }
+        // if (!isset($body['to'])) {
+        //     $body['to'] = $recipientnumber;
+        // }
 
         // Initialize cURL
         $curl = curl_init();
