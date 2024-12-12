@@ -893,9 +893,9 @@ class MediaController extends Controller
         $url = 'https://partnersv1.pinbot.ai/v3/' . $phone_number_id . '/messages';
 
         // Ensure the 'to' field is present in the payload; if not, add it dynamically
-        if (!isset($payload['to'])) {
-            $payload['to'] = $recipientnumber;
-        }
+        // if (!isset($payload['to'])) {
+        //     $payload['to'] = $recipientnumber;
+        // }
 
         // Initialize cURL
         $curl = curl_init();
@@ -939,6 +939,81 @@ class MediaController extends Controller
             'response' => json_decode($response, true),
         ]);
     }
+
+    // Send Template Message//public function sendWhatsAppTemplate(Request $request)
+    public function sendTemplateMessage(Request $request)
+    {
+        // Validate the required headers and key parts of the request
+        $request->validate([
+            'phone_number_id' => 'required|string',
+            'apikey' => 'required|string',
+            'body' => 'required|array', // Ensures the body is passed as an array
+        ]);
+    
+        // Extract data from the request
+        $phoneNumberId = $request->input('phone_number_id');
+        $apiKey = $request->input('apikey');
+        $body = $request->input('body'); // Dynamic body as array
+    
+        // Construct the API URL
+        $url = "https://partnersv1.pinbot.ai/v3/{$phoneNumberId}/messages";
+    
+        // Initialize cURL
+        $curl = curl_init();
+    
+        // Set cURL options
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYHOST => 0, // Disable SSL host verification
+            CURLOPT_SSL_VERIFYPEER => 0, // Disable SSL peer verification
+            CURLOPT_ENCODING => '', 
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST', // HTTP POST method
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey, // Include API key in the headers
+                'Content-Type: application/json', // Specify the content type as JSON
+            ],
+            CURLOPT_POSTFIELDS => json_encode($body), // Encode the body as JSON
+        ]);
+    
+        // Execute the cURL request
+        $response = curl_exec($curl);
+    
+        // Check for cURL errors
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);
+            curl_close($curl);
+            return response()->json([
+                'status' => 'error',
+                'message' => $error,
+            ], 500);
+        }
+    
+        // Close the cURL session
+        curl_close($curl);
+    
+        // Decode the API response
+        $responseData = json_decode($response, true);
+        // dd($responseData);
+    
+        // Handle the API response
+        if (isset($responseData) && !empty($responseData)) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $responseData,
+            ]);
+        }
+    
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid response from the server.',
+        ], 500);
+    }
+    
 
 }
 

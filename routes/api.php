@@ -81,5 +81,8 @@ Route::post('send-message-template-text', [MediaController::class, 'sendMessageT
 Route::post('/send-message/{phone_number_id}', [MediaController::class, 'sendMessage']);
 Route::post('/send-image-message/{phone_number_id}', [MediaController::class, 'sendImageMessage']);
 Route::post('/send-contact-message', [MediaController::class, 'sendContactMessage']);
+Route::post('/send-template-message', [MediaController::class, 'sendTemplateMessage']);
+
+
 
 
