@@ -805,9 +805,6 @@ class MediaController extends Controller
 
         return response()->json(json_decode($response, true), 200);
     }
-
-
-
     //send mpm 
     public function sendMpmMessage(Request $request)
     {
@@ -1015,5 +1012,188 @@ class MediaController extends Controller
     }
     
 
-}
 
+    // Send Message Template Interactive
+    public function sendMessageTemplateInteractive(Request $request)
+    {
+        // Retrieve required data from the request
+        $phone_number_id = $request->input('phone_number_id');
+        //$recipientnumber = $request->input('recipientnumber');
+        $apiKey = $request->input('apikey');
+        $body = $request->input('body'); // Dynamically retrieve the POST body
+        //dd($body);
+
+        // Define the API URL dynamically
+        $url = 'https://partnersv1.pinbot.ai/v3/' . $phone_number_id . '/messages';
+
+        // Ensure the 'to' field is present in the body; if not, add it dynamically
+        // if (!isset($body['to'])) {
+        //     $body['to'] = $recipientnumber;
+        // }
+
+        // Initialize cURL
+        $curl = curl_init();
+
+        // Set the cURL options
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'apikey: ' . $apiKey,
+            ],
+            CURLOPT_POSTFIELDS => json_encode($body), // Send the body dynamically
+        ]);
+
+        // Execute the cURL request
+        $response = curl_exec($curl);
+
+        // Handle cURL errors
+        if (curl_errno($curl)) {
+            return response()->json([
+                'status' => 'error',
+                'error' => curl_error($curl),
+            ], 500);
+        }
+
+        // Close cURL
+        curl_close($curl);
+
+        // Decode the API response and return it
+        return response()->json([
+            'status' => 'success',
+            'response' => json_decode($response, true),
+        ]);
+    }
+
+    //Mark Messages as Read
+    public function markMessages(Request $request)
+    {
+        $apiKey = $request->input('apikey');
+        $phoneNumberId = $request->input('phone_number_id'); // Dynamic phone number ID
+        $payload = $request->input('payload');
+
+        $url = "https://partnersv1.pinbot.ai/v3/$phoneNumberId/messages";
+
+        // Initialize cURL session
+        $curl = curl_init();
+
+        // Set the cURL options
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); // Disable SSL host verification
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);  // Disable SSL peer verification
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',  // Change to POST for sending data
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey,  // Include API key in the header
+                'Content-Type: application/json',  // Specify the content type as JSON
+            ],
+            CURLOPT_POSTFIELDS => json_encode($payload),  // Send the payload as JSON
+        ]);
+
+        // Execute the cURL request
+        $response = curl_exec($curl);
+        // dd($response);
+        if ($response === false) {
+            return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
+        }
+
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($httpStatus != 200) {
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
+        }
+
+        return response()->json(json_decode($response, true), 200);
+    }
+
+    public function sendMedia(Request $request)
+    {
+        $apiKey = $request->input('apikey');
+        $phoneNumberId = $request->input('phone_number_id'); // Dynamic phone number ID
+        $payload = $request->input('payload');
+
+        $url = "https://partnersv1.pinbot.ai/v3/$phoneNumberId/messages";
+
+        // Initialize cURL session
+        $curl = curl_init();
+
+        // Set the cURL options
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); // Disable SSL host verification
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);  // Disable SSL peer verification
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',  // Change to POST for sending data
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apiKey,  // Include API key in the header
+                'Content-Type: application/json',  // Specify the content type as JSON
+            ],
+            CURLOPT_POSTFIELDS => json_encode($payload),  // Send the payload as JSON
+        ]);
+
+        // Execute the cURL request
+        $response = curl_exec($curl);
+        // dd($response);
+        if ($response === false) {
+            return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
+        }
+
+        $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($httpStatus != 200) {
+            // Decode the response if it is JSON
+            $responseDecoded = json_decode($response, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Properly formatted API error response
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $responseDecoded
+                ], $httpStatus);
+            } else {
+                // If response is not JSON, return it as raw text
+                return response()->json([
+                    'error' => 'API error',
+                    'details' => $response
+                ], $httpStatus);
+            }
+        }
+
+        return response()->json(json_decode($response, true), 200);
+    }
+}

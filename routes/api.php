@@ -3,6 +3,7 @@
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -84,5 +85,15 @@ Route::post('/send-contact-message', [MediaController::class, 'sendContactMessag
 Route::post('/send-template-message', [MediaController::class, 'sendTemplateMessage']);
 
 
+//11-12-2024
+Route::post('mark-messages-read', [MediaController::class, 'markMessages']);
+Route::post('send-messages-media', [MediaController::class, 'sendMedia']);
+Route::post('/send-interactive-message',[MediaController::class,'sendMessageTemplateInteractive']);
+
+
+//webhook 12-12-2024
+
+Route::post('/set-webhook',[WebhookController::class,'setWebhook']);
+Route::get('/get-webhook',[WebhookController::class,'getWebhook']);
 
 
