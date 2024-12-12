@@ -625,15 +625,7 @@ class TemplateController extends Controller
 
         // Set headers with the apikey
         $headers = [
-            'Cache-Control: no-cache',
-            'Postman-Token: <calculated when request is sent>',
             'Content-Type: application/json',
-            'Content-Length: <calculated when request is sent>',
-            'Host: <calculated when request is sent>',
-            'User-Agent: PostmanRuntime/7.32.1',
-            'Accept: */*',
-            'Accept-Encoding: gzip, deflate, br',
-            'Connection: keep-alive',
             "apikey: {$apikey}",
         ];
         // Initialize cURL
