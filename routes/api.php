@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -95,5 +97,21 @@ Route::post('/send-interactive-message',[MediaController::class,'sendMessageTemp
 
 Route::post('/set-webhook',[WebhookController::class,'setWebhook']);
 Route::get('/get-webhook',[WebhookController::class,'getWebhook']);
+
+
+
+Route::get('/google-sheet',[CalendarController::class,'fetchSheetData']);
+Route::post('/google-sheets/append', [CalendarController::class, 'appendData']);
+Route::get('/google/auth', [CalendarController::class, 'getAccessToken']);
+//calender apis
+Route::post('create-google-calendar', [CalendarController::class, 'createCalendar']);
+Route::post('get-calendar', [CalendarController::class, 'getCalendar']);
+Route::post('update-calendar', [CalendarController::class, 'updateCalendar']);
+Route::delete('delete-calendar', [CalendarController::class, 'deleteCalendar']);
+
+Route::get('generate-jwt', [CalendarController::class, 'generateJwt']);
+
+
+
 
 

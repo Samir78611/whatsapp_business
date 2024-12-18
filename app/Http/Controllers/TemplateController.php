@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-
 class TemplateController extends Controller
 {
     public function createTemplateLocation(Request $request, $wabaid)
@@ -676,8 +675,8 @@ class TemplateController extends Controller
         }
     }
 
-    
-    public function editTemplateLocation(Request $request, $msgtemplateid )
+
+    public function editTemplateLocation(Request $request, $msgtemplateid)
     {
         $apiKey = $request->input('apikey');
         $payload = $request->input('payload');
@@ -737,7 +736,7 @@ class TemplateController extends Controller
         return response()->json(json_decode($response, true), 200);
     }
 
-    public function editTemplateText(Request $request, $msgtemplateid )
+    public function editTemplateText(Request $request, $msgtemplateid)
     {
         $apiKey = $request->input('apikey');
         $payload = $request->input('payload');
@@ -797,7 +796,7 @@ class TemplateController extends Controller
         return response()->json(json_decode($response, true), 200);
     }
 
-    public function editTemplateCopyCode(Request $request, $msgtemplateid )
+    public function editTemplateCopyCode(Request $request, $msgtemplateid)
     {
         $apiKey = $request->input('apikey');
         $payload = $request->input('payload');
@@ -857,7 +856,7 @@ class TemplateController extends Controller
         return response()->json(json_decode($response, true), 200);
     }
 
-    public function editTemplateCatalog(Request $request, $msgtemplateid )
+    public function editTemplateCatalog(Request $request, $msgtemplateid)
     {
         $apiKey = $request->input('apikey');
         $payload = $request->input('payload');
@@ -917,7 +916,7 @@ class TemplateController extends Controller
         return response()->json(json_decode($response, true), 200);
     }
 
-    public function editTemplateMpm(Request $request, $msgtemplateid )
+    public function editTemplateMpm(Request $request, $msgtemplateid)
     {
         $apiKey = $request->input('apikey');
         $payload = $request->input('payload');
@@ -980,215 +979,209 @@ class TemplateController extends Controller
 
     //media
     public function uploadMediaFile(Request $request, $phoneNumberId)
-{
-    // API endpoint URL
-    $url = "https://partnersv1.pinbot.ai/v3/{$phoneNumberId}/media";
+    {
+        // API endpoint URL
+        $url = "https://partnersv1.pinbot.ai/v3/{$phoneNumberId}/media";
 
-    // Retrieve the apikey from the request
-    $apikey = $request->input('apikey');
-    if (!$apikey) {
-        return response()->json([
-            'message' => 'Missing required apikey in the request',
-        ], 400);
-    }
+        // Retrieve the apikey from the request
+        $apikey = $request->input('apikey');
+        if (!$apikey) {
+            return response()->json([
+                'message' => 'Missing required apikey in the request',
+            ], 400);
+        }
 
-    // Check if the file is present in the request
-    if (!$request->hasFile('sheet')) {
-        return response()->json([
-            'message' => 'Missing required file in the request',
-        ], 400);
-    }
+        // Check if the file is present in the request
+        if (!$request->hasFile('sheet')) {
+            return response()->json([
+                'message' => 'Missing required file in the request',
+            ], 400);
+        }
 
-    // Retrieve the uploaded file
-    $file = $request->file('sheet');
+        // Retrieve the uploaded file
+        $file = $request->file('sheet');
 
-    // Prepare the file for upload using CURLFile
-    $filePath = $file->getPathname();
-    $fileName = $file->getClientOriginalName();
-    $fileMimeType = $file->getMimeType();
-    $fileData = new \CURLFile($filePath, $fileMimeType, $fileName);
+        // Prepare the file for upload using CURLFile
+        $filePath = $file->getPathname();
+        $fileName = $file->getClientOriginalName();
+        $fileMimeType = $file->getMimeType();
+        $fileData = new \CURLFile($filePath, $fileMimeType, $fileName);
 
-    // Prepare the form data
-    $postFields = [
-        'sheet' => $fileData,
-    ];
+        // Prepare the form data
+        $postFields = [
+            'sheet' => $fileData,
+        ];
 
-    // Set headers with the apikey
-    $headers = [
-        'Cache-Control: no-cache',
-        'Content-Type: multipart/form-data',
-        "apikey: {$apikey}",
-    ];
+        // Set headers with the apikey
+        $headers = [
+            'Cache-Control: no-cache',
+            'Content-Type: multipart/form-data',
+            "apikey: {$apikey}",
+        ];
 
-    // Initialize cURL
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt_array($curl, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => $postFields,
-        CURLOPT_HTTPHEADER => $headers,
-    ]);
+        // Initialize cURL
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $postFields,
+            CURLOPT_HTTPHEADER => $headers,
+        ]);
 
-    // Execute the request and capture the response
-    $response = curl_exec($curl);
-    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        // Execute the request and capture the response
+        $response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-    // Check for cURL errors
-    if (curl_errno($curl)) {
-        $error = curl_error($curl);
+        // Check for cURL errors
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);
+            curl_close($curl);
+
+            return response()->json([
+                'message' => 'cURL error occurred',
+                'error' => $error,
+            ], 500);
+        }
+
         curl_close($curl);
 
-        return response()->json([
-            'message' => 'cURL error occurred',
-            'error' => $error,
-        ], 500);
+        // Decode JSON response
+        $responseData = json_decode($response, true);
+
+        // Return the response based on HTTP status code
+        if ($httpCode >= 200 && $httpCode < 300) {
+            return response()->json($responseData, $httpCode);
+        } else {
+            return response()->json([
+                'message' => 'Failed to send API request',
+                'error' => $responseData,
+            ], $httpCode);
+        }
     }
 
-    curl_close($curl);
 
-    // Decode JSON response
-    $responseData = json_decode($response, true);
+    //downlaod media
+    public function downloadMedia(Request $request, $mediaId, $phoneNumberId)
+    {
+        // Retrieve the apikey from the request
+        $apikey = $request->input('apikey');
+        if (!$apikey) {
+            return response()->json([
+                'message' => 'Missing required apikey in the request',
+            ], 400);
+        }
 
-    // Return the response based on HTTP status code
-    if ($httpCode >= 200 && $httpCode < 300) {
-        return response()->json($responseData, $httpCode);
-    } else {
-        return response()->json([
-            'message' => 'Failed to send API request',
-            'error' => $responseData,
-        ], $httpCode);
-    }
-}
+        // Construct the URL with placeholders replaced by actual values
+        $url = "https://partnersv1.pinbot.ai/v3/downloadMedia/{$mediaId}?phone_number_id={$phoneNumberId}";
 
+        // Initialize cURL
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apikey,
+            ],
+        ]);
 
-//downlaod media
-public function downloadMedia(Request $request, $mediaId, $phoneNumberId)
-{
-    // Retrieve the apikey from the request
-    $apikey = $request->input('apikey');
-    if (!$apikey) {
-        return response()->json([
-            'message' => 'Missing required apikey in the request',
-        ], 400);
-    }
+        // Execute the request and capture the response
+        $response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $contentType = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
 
-    // Construct the URL with placeholders replaced by actual values
-    $url = "https://partnersv1.pinbot.ai/v3/downloadMedia/{$mediaId}?phone_number_id={$phoneNumberId}";
+        // Close the cURL session
+        curl_close($curl);
 
-    // Initialize cURL
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt_array($curl, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_HTTPHEADER => [
-            'apikey: ' . $apikey,
-        ],
-    ]);
-
-    // Execute the request and capture the response
-    $response = curl_exec($curl);
-    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    $contentType = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
-
-    // Close the cURL session
-    curl_close($curl);
-
-    // Check the response status
-    if ($httpCode >= 200 && $httpCode < 300) {
-        // Return the response as-is if it's successful (e.g., file content)
-        return response()->stream(
-            function () use ($response) {
-                echo $response;
-            },
-            200,
-            [
-                'Content-Type' => $contentType,
-                'Content-Disposition' => 'attachment; filename="downloaded_media"',
-            ]
-        );
-    } else {
-        return response()->json([
-            'message' => 'Failed to download media',
-            'error' => $response,
-        ], $httpCode);
-    }
-}
-
-
-//delete media
-
-public function deleteMedia(Request $request, $mediaId, $phoneNumberId)
-{
-    // Retrieve the apikey from the request
-    $apikey = $request->input('apikey');
-    if (!$apikey) {
-        return response()->json([
-            'message' => 'Missing required apikey in the request',
-        ], 400);
+        // Check the response status
+        if ($httpCode >= 200 && $httpCode < 300) {
+            // Return the response as-is if it's successful (e.g., file content)
+            return response()->stream(
+                function () use ($response) {
+                    echo $response;
+                },
+                200,
+                [
+                    'Content-Type' => $contentType,
+                    'Content-Disposition' => 'attachment; filename="downloaded_media"',
+                ]
+            );
+        } else {
+            return response()->json([
+                'message' => 'Failed to download media',
+                'error' => $response,
+            ], $httpCode);
+        }
     }
 
-    // Construct the URL with placeholders replaced by actual values
-    $url = "https://partnersv1.pinbot.ai/v3/{$mediaId}?phone_number_id={$phoneNumberId}";
 
-    // Initialize cURL
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt_array($curl, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'DELETE',
-        CURLOPT_HTTPHEADER => [
-            'apikey: ' . $apikey,
-            'Content-Type: application/json',
-        ],
-    ]);
+    //delete media
 
-    // Execute the request and capture the response
-    $response = curl_exec($curl);
-    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    public function deleteMedia(Request $request, $mediaId, $phoneNumberId)
+    {
+        // Retrieve the apikey from the request
+        $apikey = $request->input('apikey');
+        if (!$apikey) {
+            return response()->json([
+                'message' => 'Missing required apikey in the request',
+            ], 400);
+        }
 
-    // Close the cURL session
-    curl_close($curl);
+        // Construct the URL with placeholders replaced by actual values
+        $url = "https://partnersv1.pinbot.ai/v3/{$mediaId}?phone_number_id={$phoneNumberId}";
 
-    // Check the response status
-    if ($httpCode >= 200 && $httpCode < 300) {
-        return response()->json([
-            'message' => 'Media deleted successfully',
-            'response' => json_decode($response, true),
-        ], $httpCode);
-    } else {
-        return response()->json([
-            'message' => 'Failed to delete media',
-            'error' => json_decode($response, true),
-        ], $httpCode);
+        // Initialize cURL
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'DELETE',
+            CURLOPT_HTTPHEADER => [
+                'apikey: ' . $apikey,
+                'Content-Type: application/json',
+            ],
+        ]);
+
+        // Execute the request and capture the response
+        $response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        // Close the cURL session
+        curl_close($curl);
+
+        // Check the response status
+        if ($httpCode >= 200 && $httpCode < 300) {
+            return response()->json([
+                'message' => 'Media deleted successfully',
+                'response' => json_decode($response, true),
+            ], $httpCode);
+        } else {
+            return response()->json([
+                'message' => 'Failed to delete media',
+                'error' => json_decode($response, true),
+            ], $httpCode);
+        }
     }
-}
-
-  
-
-
-
-
 }
