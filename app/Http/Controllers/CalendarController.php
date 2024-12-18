@@ -414,7 +414,9 @@ class CalendarController extends Controller
 
         $jwtPayload = [
             'iss' => $clientEmail, // Issuer (the service account email)
-            'scope' => 'https://www.googleapis.com/auth/calendar', // Scope you need
+            'scope' => 'https://www.googleapis.com/auth/calendar.readonly', // Scope you need
+            //https://www.googleapis.com/auth/calendar
+            //https://www.googleapis.com/auth/calendar.readonly
             'aud' => $tokenUri, // Audience (token endpoint)
             'exp' => $expirationTime, // Expiration time
             'iat' => $currentTime, // Issued at time

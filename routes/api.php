@@ -105,11 +105,12 @@ Route::get('/google-sheet',[CalendarController::class,'fetchSheetData']);
 Route::get('/google/auth', [CalendarController::class, 'getAccessToken']);
 
 //calender apis
+Route::get('generate-jwt-calendar', [CalendarController::class, 'generateJwt']);
 Route::post('create-google-calendar', [CalendarController::class, 'createCalendar']);
 Route::post('get-calendar', [CalendarController::class, 'getCalendar']);
 Route::post('update-calendar', [CalendarController::class, 'updateCalendar']);
 Route::delete('delete-calendar', [CalendarController::class, 'deleteCalendar']);
-Route::get('generate-jwt-calendar', [CalendarController::class, 'generateJwt']);
+
 
 //Google Sheet
 Route::get('/generate-jwt', [GoogleSheetController::class, 'generateJwt']);
