@@ -73,57 +73,6 @@ class CalendarController extends Controller
         }
     }
 
-    public function appendData(Request $request)
-    {
-        // Fetch input parameters from the request
-        $spreadsheetId = $request->input('spreadsheet_id');
-        $range = $request->input('range');
-        $values = $request->input('values'); // Array of values to append
-        $accessToken = $request->input('access_token'); // OAuth token
-
-        // Google Sheets API endpoint without API key
-        $url = "https://sheets.googleapis.com/v4/spreadsheets/{$spreadsheetId}/values/{$range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS";
-
-        // cURL Implementation
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode(['values' => $values]),
-            CURLOPT_HTTPHEADER => [
-                'Authorization: Bearer ' . $accessToken,
-                'Content-Type: application/json',
-                'Accept: application/json',
-            ],
-        ]);
-
-        // Execute the request and capture the response
-        $response = curl_exec($curl);
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        // Close the cURL session
-        curl_close($curl);
-
-        // Return response
-        if ($httpCode >= 200 && $httpCode < 300) {
-            return response()->json([
-                'message' => 'Data appended successfully',
-                'response' => json_decode($response, true),
-            ], $httpCode);
-        } else {
-            return response()->json([
-                'message' => 'Failed to append data',
-                'error' => json_decode($response, true),
-            ], $httpCode);
-        }
-    }
-
-
     public function getAccessToken()
     {
         // dd("hii");

@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleSheetController;
 
 
 
@@ -101,17 +102,17 @@ Route::get('/get-webhook',[WebhookController::class,'getWebhook']);
 
 
 Route::get('/google-sheet',[CalendarController::class,'fetchSheetData']);
-Route::post('/google-sheets/append', [CalendarController::class, 'appendData']);
 Route::get('/google/auth', [CalendarController::class, 'getAccessToken']);
+
 //calender apis
 Route::post('create-google-calendar', [CalendarController::class, 'createCalendar']);
 Route::post('get-calendar', [CalendarController::class, 'getCalendar']);
 Route::post('update-calendar', [CalendarController::class, 'updateCalendar']);
 Route::delete('delete-calendar', [CalendarController::class, 'deleteCalendar']);
+Route::get('generate-jwt-calendar', [CalendarController::class, 'generateJwt']);
 
-Route::get('generate-jwt', [CalendarController::class, 'generateJwt']);
-
-
-
-
-
+//Google Sheet
+Route::get('/generate-jwt', [GoogleSheetController::class, 'generateJwt']);
+Route::get('/google-sheet',[GoogleSheetController::class,'fetchSheetDat']);
+Route::post('/google-sheets/data-filter', [GoogleSheetController::class, 'fetchDataByFilter']);
+Route::post('/google-sheets/append', [GoogleSheetController::class, 'appendData']);

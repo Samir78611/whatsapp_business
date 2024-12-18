@@ -73,53 +73,44 @@ class MediaController extends Controller
 
     public function downloadMedia(Request $request)
     {
-        // Get the API key and media URL from the request
         $apiKey = $request->input('apikey');
         $mediaUrl = $request->input('mediaurl');
-
-        // Debugging to confirm values
+    
         if (!$mediaUrl || !$apiKey) {
             return response()->json(['error' => 'API key and Media URL are required'], 400);
         }
-        // dd($mediaUrl);
-        // Initialize cURL session
+    
         $curl = curl_init();
-
-        // Set the cURL options
+    
         curl_setopt_array($curl, [
             CURLOPT_URL => $mediaUrl,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYHOST => 0, // Disable SSL host verification
-            CURLOPT_SSL_VERIFYPEER => 0, // Disable SSL peer verification
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json',
                 'apikey: ' . $apiKey,
             ],
         ]);
-
-        // Execute the cURL request
+    
         $response = curl_exec($curl);
-
-        // Handle cURL errors
+    
         if ($response === false) {
             return response()->json(['error' => 'cURL error: ' . curl_error($curl)], 500);
         }
-
-        // Get HTTP response status
+    
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $contentType = curl_getinfo($curl, CURLINFO_CONTENT_TYPE); // Get the content type
         curl_close($curl);
-
-        // Check if the response is successful
+    
         if ($httpStatus != 200) {
             return response()->json(['error' => 'Failed to download media', 'status' => $httpStatus], $httpStatus);
         }
-
-        // Extract the filename from the media URL
+    
         $filename = basename(parse_url($mediaUrl, PHP_URL_PATH));
-
-        // Return the downloaded file as a response
+    
         return response($response)
-            ->header('Content-Type', 'application/octet-stream')
+            ->header('Content-Type', $contentType) // Dynamically set Content-Type
             ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 
