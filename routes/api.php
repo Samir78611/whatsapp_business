@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleSheetController;
 
 
 
@@ -97,3 +98,7 @@ Route::post('/set-webhook',[WebhookController::class,'setWebhook']);
 Route::get('/get-webhook',[WebhookController::class,'getWebhook']);
 
 
+//Google Sheet
+Route::get('/generate-jwt', [GoogleSheetController::class, 'generateJwt']);
+Route::get('/google-sheet',[GoogleSheetController::class,'fetchSheetDat']);
+Route::post('/google-sheets/data-filter', [GoogleSheetController::class, 'fetchDataByFilter']);
