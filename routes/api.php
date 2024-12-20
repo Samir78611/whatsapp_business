@@ -6,6 +6,7 @@ use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Calenderlistcontroller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleSheetController;
 
@@ -106,6 +107,7 @@ Route::get('/google/auth', [CalendarController::class, 'getAccessToken']);
 
 //calender apis
 Route::get('generate-jwt-calendar', [CalendarController::class, 'generateJwt']);
+Route::get('generate-jwt-calendar-readonly', [CalendarController::class, 'generateJwtReadonly']);
 Route::post('create-google-calendar', [CalendarController::class, 'createCalendar']);
 Route::post('get-calendar', [CalendarController::class, 'getCalendar']);
 Route::post('update-calendar', [CalendarController::class, 'updateCalendar']);
@@ -117,3 +119,12 @@ Route::get('/generate-jwt', [GoogleSheetController::class, 'generateJwt']);
 Route::get('/google-sheet',[GoogleSheetController::class,'fetchSheetDat']);
 Route::post('/google-sheets/data-filter', [GoogleSheetController::class, 'fetchDataByFilter']);
 Route::post('/google-sheets/append', [GoogleSheetController::class, 'appendData']);
+
+
+
+//Calenderlist
+Route::get('/get-calljwt',[Calenderlistcontroller::class,'generateJwt']);
+Route::post('/get-insertlist',[Calenderlistcontroller::class,'insertCalendarList']);
+Route::get('/get-calist',[Calenderlistcontroller::class,'getCalendarList']);
+Route::put('/update-calist',[Calenderlistcontroller::class,'updateCalendarlist']);
+Route::delete('/delete-calist',[Calenderlistcontroller::class,'deleteCalendarlist']);

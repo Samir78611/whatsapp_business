@@ -190,6 +190,38 @@ class GoogleSheetController extends Controller
         ]);
     }
 
+    public function generateJwtReadonly()
+    {
+        // Step 1: Load service account details from the JSON file
+        $filePath = storage_path('app/service-account.json'); // Adjust the path to your file location
+        $serviceAccountInfo = json_decode(file_get_contents($filePath), true);
+
+        // Step 2: Extract required data from the service account info
+        $privateKey = $serviceAccountInfo['private_key'];
+        $clientEmail = $serviceAccountInfo['client_email'];
+        $tokenUri = $serviceAccountInfo['token_uri'];
+
+        // Step 3: Prepare the JWT payload (claims)
+        $currentTime = time();
+        $expirationTime = $currentTime + 3600; // Set expiration to 1 hour
+
+        $jwtPayload = [
+            'iss' => $clientEmail, // Issuer (the service account email)
+            'scope' => 'https://www.googleapis.com/auth/spreadsheets', // Scope you need
+            'aud' => $tokenUri, // Audience (token endpoint)
+            'exp' => $expirationTime, // Expiration time
+            'iat' => $currentTime, // Issued at time
+        ];
+
+        // Step 4: Sign the JWT using the service account's private key
+        $jwt = JWT::encode($jwtPayload, $privateKey, 'RS256');
+
+        // Step 5: Output the JWT
+        return response()->json([
+            'jwt' => $jwt,
+        ]);
+    }
+
     //demo
     public function fetchSheetDat(Request $request)
     {
