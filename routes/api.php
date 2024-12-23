@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Calenderlistcontroller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleSheetController;
+use App\Http\Controllers\deleteController;
 
 
 
@@ -132,3 +133,7 @@ Route::delete('/delete-calist',[Calenderlistcontroller::class,'deleteCalendarlis
 //Get template with pagination
 Route::get('get-template-with-pagination', [TemplateController::class, 'templateWithPagination']);
 Route::get('get-all-templates', [TemplateController::class, 'getAllTemplate']);
+
+//delete template
+Route::delete('delete-template-by-name',[deleteController::class,'deleteMessageTemplate']);
+Route::delete('delete-name-and-id',[deleteController::class,'deleteTemplateById']);
