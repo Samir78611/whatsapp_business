@@ -109,7 +109,7 @@ Route::get('/google/auth', [CalendarController::class, 'getAccessToken']);
 Route::get('generate-jwt-calendar', [CalendarController::class, 'generateJwt']);
 Route::get('generate-jwt-calendar-readonly', [CalendarController::class, 'generateJwtReadonly']);
 Route::post('create-google-calendar', [CalendarController::class, 'createCalendar']);
-Route::post('get-calendar', [CalendarController::class, 'getCalendar']);
+Route::get('get-calendar', [CalendarController::class, 'getCalendar']);
 Route::post('update-calendar', [CalendarController::class, 'updateCalendar']);
 Route::delete('delete-calendar', [CalendarController::class, 'deleteCalendar']);
 
@@ -128,3 +128,7 @@ Route::post('/get-insertlist',[Calenderlistcontroller::class,'insertCalendarList
 Route::get('/get-calist',[Calenderlistcontroller::class,'getCalendarList']);
 Route::put('/update-calist',[Calenderlistcontroller::class,'updateCalendarlist']);
 Route::delete('/delete-calist',[Calenderlistcontroller::class,'deleteCalendarlist']);
+
+//Get template with pagination
+Route::get('get-template-with-pagination', [TemplateController::class, 'templateWithPagination']);
+Route::get('get-all-templates', [TemplateController::class, 'getAllTemplate']);

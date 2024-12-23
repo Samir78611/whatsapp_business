@@ -400,7 +400,7 @@ class CalendarController extends Controller
     public function generateJwt()
     {
         // Step 1: Load service account details from the JSON file
-        $filePath = storage_path('app/credentials.json'); // Adjust the path to your file location
+        $filePath = storage_path('app/service-account.json'); // Adjust the path to your file location
         $serviceAccountInfo = json_decode(file_get_contents($filePath), true);
 
         // Step 2: Extract required data from the service account info
